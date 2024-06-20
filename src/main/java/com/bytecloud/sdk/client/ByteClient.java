@@ -62,7 +62,8 @@ public class ByteClient implements ByteApi {
     public Address createAddress(String mainCoinType, String alias, String walletId, String callUrl) throws ByteException{
         Map<String, String> params = new HashMap<>();
         params.put("merchantId", merchantId);
-        params.put("coinType", mainCoinType);
+//        params.put("coinType", mainCoinType);
+        params.put("mainCoinType", mainCoinType);
         params.put("callUrl", callUrl);
         params.put("walletId", walletId);
         params.put("alias", alias);
@@ -128,8 +129,13 @@ public class ByteClient implements ByteApi {
         Map<String, Object> params = new HashMap<>();
         params.put("merchantId", merchantId);
         params.put("showBalance", showBalance);
+//        String temp = ByteUtils.post(gateway,merchantKey,ApiPath.SUPPORT_COIN,JSONUtil.toJsonStr(params));
+//        System.out.println("temp="+temp);
+//        ByteUtils.post(gateway, merchantKey, ApiPath.SUPPORT_COIN, JSONUtil.toJsonStr(params)), ResultMsg.class;
+
         ResultMsg result = JSONUtil.toBean(ByteUtils.post(gateway, merchantKey, ApiPath.SUPPORT_COIN, JSONUtil.toJsonStr(params)), ResultMsg.class);
         if (result.getCode() != HttpStatus.HTTP_OK) {
+//            System.out.println("result="+result);
             Console.error(JSONUtil.toJsonStr(result));
             return null;
         }
